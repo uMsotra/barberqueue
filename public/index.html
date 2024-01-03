@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soweto Barbershop Queue System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+      /* Media Query for Mobile */
+@media screen and (max-width: 600px) {
+  
+  /* Show only the first 5 images */
+  .background-tiles img:nth-child(-n+5) {
+      display: block;
+  }
+}
+  </style>
+</head>
+<body>
+
+
+  <div class="container">
+    
+    <img src="logo.jpg" alt="Logo" class="logo">
+    <form id="queueForm" class="form-futuristic">
+      <label for="nickname">Nickname:</label>
+      <input type="text" maxlength="15" id="nickname" placeholder="Enter Nickname"><br><br>
+      <label for="whatsapp">WhatsApp Number:</label>
+      <input type="tel" id="whatsapp" placeholder="Enter WhatsApp Number" pattern="[0-9]{10}" required maxlength="10"><br><br>
+
+      <label for="selectedBarber">Select Barber:</label><br>
+      <div class="barber-buttons">
+
+    <button type="button" class="barber-button" value="Ndumiso">
+      <img src="ndumiso.jpeg" alt="Ndumiso" class="barber-icon">Ndumiso 
+    </button>
+    <button type="button" class="barber-button" value="CeeJay">
+      <img src="ceejay.jpeg" alt="CeeJay" class="barber-icon">Cee Jay
+    </button>
+    <button type="button" class="barber-button" value="Goat Kay">
+      <img src="goat kay.jpeg" alt="Goat Kay" class="barber-icon">Goat Kay
+    </button>
+    <button type="button" class="barber-button" value="Ta Mjakes">
+      <img src="ta mjakes.jpeg" alt="Ta Mjakes" class="barber-icon">Ta Mjakes
+    </button>
+
+      </div><br><br>
+      <input type="hidden" id="selectedBarber" name="selectedBarber">
+      <button type="submit" class="futuristic-button">Join Queue</button>
+    </form>
+    <button id="viewQueueButton" class="futuristic-button">View Queue</button>
+  </div>
+  <div class="background-tiles">
+    <img src="1.jpeg" alt="Haircut 1">
+    <img src="5.jpeg" alt="Haircut 1">
+    <img src="6.jpg" alt="Haircut 1">
+    <img src="4.jpeg" alt="Haircut 1">
+    <img src="2.jpeg" alt="Haircut 1">
+    <img src="3.jpg" alt="Haircut 1">
+    <img src="7.jpeg" alt="Haircut 1">
+    <img src="8.jpeg" alt="Haircut 1">
+    <img src="9.jpeg" alt="Haircut 1">
+    <img src="8.jpeg" alt="Haircut 1">
+    <img src="9.jpeg" alt="Haircut 1">
+    <img src="1.jpeg" alt="Haircut 1">
+    <img src="1.jpeg" alt="Haircut 1">
+    <img src="2.jpeg" alt="Haircut 1">
+    <img src="3.jpg" alt="Haircut 1">
+    <img src="4.jpeg" alt="Haircut 1">
+    <img src="1.jpeg" alt="Haircut 1">
+    <img src="2.jpeg" alt="Haircut 1">
+    <img src="3.jpg" alt="Haircut 1">
+    <img src="4.jpeg" alt="Haircut 1">
+    <img src="1.jpeg" alt="Haircut 1">
+    <img src="2.jpeg" alt="Haircut 1">
+    <img src="3.jpg" alt="Haircut 1">
+    <img src="4.jpeg" alt="Haircut 1">
+
+
+</div>
+<script type="module">
+
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyATX1PtZS5e_1zxbYXNahop_YeYWEYcLPw",
+  authDomain: "matomesqueue.firebaseapp.com",
+  databaseURL: "https://matomesqueue-default-rtdb.firebaseio.com",
+  projectId: "matomesqueue",
+  storageBucket: "matomesqueue.appspot.com",
+  messagingSenderId: "223650040990",
+  appId: "1:223650040990:web:0b8bbb70704d2fc017ff8f",
+  measurementId: "G-QPX28V2J3P"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+const queueForm = document.getElementById('queueForm');
+  const nicknameInput = document.getElementById('nickname');
+  const selectedBarberInput = document.getElementById('selectedBarber');
+  const whatsappInput = document.getElementById('whatsapp'); // Select WhatsApp input field
+
+const barberButtons = document.querySelectorAll('.barber-button');
+const viewQueueButton = document.getElementById('viewQueueButton');
+
+viewQueueButton.addEventListener('click', () => {
+  // Redirect the user to the queue display page
+  window.location.href = 'queueDisplay.html';
+});
+
+// Add event listeners to the barber buttons
+barberButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const selectedBarber = button.value;
+    selectedBarberInput.value = selectedBarber;
+
+ 
+    barberButtons.forEach(b => b.classList.remove('selected'));
+
+    // Add "selected" class to the clicked button
+    button.classList.add('selected');
+  });
+});
+queueForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Get nickname, selected barber, and WhatsApp number values
+    const nickname = nicknameInput.value;
+    const selectedBarber = selectedBarberInput.value;
+    const whatsapp = whatsappInput.value; 
+    
+    // Validate input
+    if (!nickname || !selectedBarber || !whatsapp) {
+        alert('Please enter a nickname, select a barber, and provide a 10-digit WhatsApp number.');
+        return;
+    }
+
+    if (!/^\d{10}$/.test(whatsapp)) {
+        alert('Please enter a valid 10-digit WhatsApp number.');
+        return;
+    }
+
+    // Check if the selected barber is available
+    const barberRef = database.ref(`barbers/${selectedBarber}/available`);
+    barberRef.once('value', (snapshot) => {
+        const isAvailable = snapshot.val();
+
+        if (!isAvailable) {
+            alert('Sorry, this barber is currently offline. Please select another barber.');
+            return;
+        }
+
+        // Write data to Firebase Realtime Database
+        const queueRef = database.ref('queue');
+        const newData = {
+            nickname,
+            barber: selectedBarber,
+            whatsapp, // Add WhatsApp number to the data
+            joinedAt: firebase.database.ServerValue.TIMESTAMP,
+        };
+        queueRef.push(newData);
+
+        // Clear form and provide confirmation
+        nicknameInput.value = '';
+        selectedBarberInput.checked = false;
+        whatsappInput.value = ''; // Clear WhatsApp input
+        alert(`You have joined the queue for ${selectedBarber}`);
+    });
+});
+
+function flipImage(image) {
+    image.style.transform = "rotateY(360deg)";
+    setTimeout(() => {
+        image.style.transform = "rotateY(0deg)";
+    }, 2500);
+}
+const backgroundTiles = document.querySelectorAll('.background-tiles img');
+let currentImageIndex = 0;
+
+setInterval(() => {
+    flipImage(backgroundTiles[currentImageIndex]);
+    currentImageIndex = (currentImageIndex + 1) % backgroundTiles.length; // Cycle through images
+}, 2000); 
+
+
+// Function to update barber button UI
+function updateButtonUI(barber, isAvailable, queueCount) {
+  const button = document.querySelector(`.barber-button[value="${barber}"]`);
+
+  if (!button) {
+    return;
+  }
+
+  button.innerHTML = `
+    <img src="${barber}.jpeg" alt="${barber}" class="barber-icon">
+    ${barber} <i class="fas fa-user-friends" aria-hidden="true"></i> ${queueCount}
+  `;
+  if (!isAvailable) {
+    button.classList.add('unavailable');
+  } else {
+    button.classList.remove('unavailable');
+  }
+}
+
+// Function to update barber button availability and queue count
+function updateButtonAvailabilityQueueCount() {
+  const barbersRef = database.ref('barbers');
+  const queueRef = database.ref('queue');
+
+  queueRef.on('value', (queueSnapshot) => {
+    const queue = queueSnapshot.val();
+    const queueCounts = {};
+
+    // Count the number of people in each barber's queue
+    Object.values(queue).forEach((person) => {
+      const barber = person.barber;
+      queueCounts[barber] = (queueCounts[barber] || 0) + 1;
+    });
+
+    barbersRef.on('value', (snapshot) => {
+      const barbers = snapshot.val();
+
+      barberButtons.forEach((button) => {
+        const barberName = button.value;
+        const isAvailable = barbers[barberName].available;
+        const queueCount = queueCounts[barberName] || 0;
+
+        updateButtonUI(barberName, isAvailable, queueCount);
+      });
+    });
+  });
+}
+
+// Call the function to update buttons initially
+updateButtonAvailabilityQueueCount();
+
+
+  </script>
+
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+
+
+
+
+
+</body>
+</html>

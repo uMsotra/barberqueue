@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber Queue Display</title>
+    <link rel="stylesheet" href="display.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        /* Media Query for Mobile */
+@media screen and (max-width: 600px) {
+    
+    /* Show only the first four images */
+    .background-tiles img:nth-child(-n+4) {
+        display: block;
+    }
+}
+    </style>
+</head>
+<a href="index.html">
+    <img src="logo.jpg" alt="Logo" class="logo">
+  </a>
+
+<body>
+    <div class="container">
+
+        <div id="queueDisplay" class="queue-display">
+            <!-- Content will be dynamically added here -->
+        </div>
+        <p class="queue-notice">You're viewing the real-time barber queue status.</p>
+    </div>
+    <div class="background-tiles">
+        <img src="1.jpeg" alt="Haircut 1">
+        <img src="5.jpeg" alt="Haircut 1">
+      
+        <img src="6.jpg" alt="Haircut 1">
+        <img src="4.jpeg" alt="Haircut 1">
+        <img src="3.jpg" alt="Haircut 1">
+        <img src="2.jpeg" alt="Haircut 1">
+      
+    
+        <img src="7.jpeg" alt="Haircut 1">
+        <img src="8.jpeg" alt="Haircut 1">
+        <img src="9.jpeg" alt="Haircut 1">
+        <img src="8.jpeg" alt="Haircut 1">
+        <img src="9.jpeg" alt="Haircut 1">
+        <img src="1.jpeg" alt="Haircut 1">
+        <img src="1.jpeg" alt="Haircut 1">
+        <img src="2.jpeg" alt="Haircut 1">
+        <img src="3.jpg" alt="Haircut 1">
+        <img src="4.jpeg" alt="Haircut 1">
+        <img src="1.jpeg" alt="Haircut 1">
+        <img src="2.jpeg" alt="Haircut 1">
+        <img src="3.jpg" alt="Haircut 1">
+        <img src="4.jpeg" alt="Haircut 1">
+        <img src="1.jpeg" alt="Haircut 1">
+        <img src="2.jpeg" alt="Haircut 1">
+        <img src="3.jpg" alt="Haircut 1">
+        <img src="4.jpeg" alt="Haircut 1">
+
+    
+        
+    </div>
+    <!-- Include Firebase scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+
+    <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyATX1PtZS5e_1zxbYXNahop_YeYWEYcLPw",
+  authDomain: "matomesqueue.firebaseapp.com",
+  databaseURL: "https://matomesqueue-default-rtdb.firebaseio.com",
+  projectId: "matomesqueue",
+  storageBucket: "matomesqueue.appspot.com",
+  messagingSenderId: "223650040990",
+  appId: "1:223650040990:web:0b8bbb70704d2fc017ff8f",
+  measurementId: "G-QPX28V2J3P"
+};
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Function to fetch and display queue data
+        function displayQueue() {
+  const queueDisplay = document.getElementById('queueDisplay');
+  queueDisplay.innerHTML = ''; // Clear previous content
+
+  const queueRef = database.ref('queue');
+
+  // Loop through barbers and fetch queue data within the single listener
+  const barbers = ['Ndumiso', 'CeeJay', 'Goat Kay', 'Ta Mjakes'];
+
+
+        barbers.forEach(barber => {
+            const barberQueueDiv = document.createElement('div');
+            barberQueueDiv.classList.add('barber-queue');
+
+            const barberHeader = document.createElement('h2');
+            barberHeader.textContent = `${barber}'s Queue`;
+
+            const barberQueueList = document.createElement('ul');
+
+        // Fetch queue data for each barber
+        queueRef.orderByChild('barber').equalTo(barber).on('value', snapshot => {
+            snapshot.forEach(childSnapshot => {
+                const customerData = childSnapshot.val();
+                const { nickname, joinedAt } = customerData;
+
+                const card = document.createElement('div');
+                card.classList.add('customer-card');
+
+                const nicknameSpan = document.createElement('span');
+                nicknameSpan.classList.add('customer-nickname');
+                nicknameSpan.textContent = nickname;
+
+                const joinedAtSpan = document.createElement('span');
+                joinedAtSpan.classList.add('joined-time');
+                joinedAtSpan.textContent = `Joined at: ${new Date(joinedAt).toLocaleString()}`;
+
+                card.appendChild(nicknameSpan);
+                card.appendChild(joinedAtSpan);
+
+                barberQueueList.appendChild(card);
+            });
+        });
+
+
+                barberQueueDiv.appendChild(barberHeader);
+                barberQueueDiv.appendChild(barberQueueList);
+                queueDisplay.appendChild(barberQueueDiv);
+            });
+            
+        }
+        const queueRef = database.ref('queue');
+        queueRef.on('value', snapshot => {
+  displayQueue(); // Call displayQueue to handle data and re-render
+});
+
+        window.onload = displayQueue;
+        
+    </script>
+</body>
+
+</html>

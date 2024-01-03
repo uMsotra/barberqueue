@@ -1,0 +1,3 @@
+fix position of background and logo as i scroll
+
+for notifying user when they are number 2, use cookies to remember users phone number, and check against the database, then notify user accordingly
