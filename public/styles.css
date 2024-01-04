@@ -296,4 +296,25 @@ input[type="text"] {
     font-size: 14px;
     font-weight: bold;
   }
-  
+  /* Position the queue info at the top right */
+.barber-button .queue-info {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px; /* Adjust font size as needed */
+    color: #333; /* Adjust color as needed */
+  }
+  .background-tiles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+    perspective: 1000px;
+    z-index: -1; /* Move the tiles to the back */
+    pointer-events: none;
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+}

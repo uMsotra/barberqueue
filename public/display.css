@@ -189,3 +189,28 @@ a.whatsapp-link:hover {
   color: #fff; /* Change text color to white */
   background-color: #25D366; /* Change background color to WhatsApp green */
 }
+/* Add this CSS code to your existing stylesheet */
+
+/* Style for queue total count */
+.barber-queue p {
+  margin-top: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #2c3e50;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 5px;
+  /* Additional styles */
+  margin-bottom: 0; /* Adjust spacing */
+
+  /* Icon styles */
+  display: flex;
+  align-items: center;
+}
+
+/* Icon style */
+.barber-queue p i {
+  margin-right: 5px;
+  color: #5e5e5e;
+}
+

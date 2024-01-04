@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="display.css">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="..." crossorigin="anonymous">
+
     <style>
         /* Media Query for Mobile */
 @media screen and (max-width: 600px) {
@@ -82,28 +85,27 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Function to fetch and display queue data
         function displayQueue() {
-  const queueDisplay = document.getElementById('queueDisplay');
-  queueDisplay.innerHTML = ''; // Clear previous content
+    const queueDisplay = document.getElementById('queueDisplay');
+    queueDisplay.innerHTML = ''; // Clear previous content
 
-  const queueRef = database.ref('queue');
+    const queueRef = database.ref('queue');
+    const barbers = ['Ndumiso', 'CeeJay', 'Goat Kay', 'Ta Mjakes'];
 
-  // Loop through barbers and fetch queue data within the single listener
-  const barbers = ['Ndumiso', 'CeeJay', 'Goat Kay', 'Ta Mjakes'];
+    barbers.forEach(barber => {
+        const barberQueueDiv = document.createElement('div');
+        barberQueueDiv.classList.add('barber-queue');
 
+        const barberHeader = document.createElement('h2');
+        barberHeader.textContent = `${barber}'s Queue`;
 
-        barbers.forEach(barber => {
-            const barberQueueDiv = document.createElement('div');
-            barberQueueDiv.classList.add('barber-queue');
+        const barberQueueList = document.createElement('ul');
 
-            const barberHeader = document.createElement('h2');
-            barberHeader.textContent = `${barber}'s Queue`;
+        let queueCount = 0; // Initialize the queue count for each barber
 
-            const barberQueueList = document.createElement('ul');
-
-        // Fetch queue data for each barber
         queueRef.orderByChild('barber').equalTo(barber).on('value', snapshot => {
+            queueCount = snapshot.numChildren(); // Count the number of children (customers) for the current barber
+
             snapshot.forEach(childSnapshot => {
                 const customerData = childSnapshot.val();
                 const { nickname, joinedAt } = customerData;
@@ -124,15 +126,19 @@
 
                 barberQueueList.appendChild(card);
             });
+
+            // Modify the queue count display in your JavaScript
+const countInfo = document.createElement('p');
+countInfo.innerHTML = `<i class="fas fa-users"></i>Total in Queue: ${queueCount}`;
+barberQueueDiv.appendChild(countInfo);
+
         });
 
-
-                barberQueueDiv.appendChild(barberHeader);
-                barberQueueDiv.appendChild(barberQueueList);
-                queueDisplay.appendChild(barberQueueDiv);
-            });
-            
-        }
+        barberQueueDiv.appendChild(barberHeader);
+        barberQueueDiv.appendChild(barberQueueList);
+        queueDisplay.appendChild(barberQueueDiv);
+    });
+}
         const queueRef = database.ref('queue');
         queueRef.on('value', snapshot => {
   displayQueue(); // Call displayQueue to handle data and re-render
