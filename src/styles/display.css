@@ -1,0 +1,212 @@
+/* General styling */
+body {
+  background-color: #1f1f1f;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  margin: 40px auto;
+  text-align: center;
+}
+
+/* Header styling */
+.futuristic-heading {
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+/* Barber queue styling */
+.barber-queue {
+  background-color: #333;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.barber-queue h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.barber-queue ul {
+  list-style: none;
+  padding: 0;
+}
+
+.barber-queue li {
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #fff;
+}
+
+/* Customer information styling */
+.barber-queue li span {
+  font-weight: bold;
+}
+
+.barber-queue li::before {
+  content: "- ";
+  margin-right: 5px;
+}
+
+.customer-card {
+  background-color: rgba(68, 68, 68, 0.8);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.1);
+  opacity: 0.9;
+}
+/* Styling for queue numbers */
+/* Customer card container */
+.customer-card {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: space-between; /* Space elements horizontally */
+}
+
+/* Queue number styling */
+.queue-number {
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffc107; /* Yellow color, adjust as needed */
+  margin-right: 10px; /* Add margin between queue number and nickname */
+}
+
+/* Nickname styling */
+.customer-nickname {
+  font-weight: bold;
+  color: #fff;
+  margin-right: auto; /* Push the nickname to the left as much as possible */
+}
+
+/* Joined time styling */
+.joined-time {
+  font-style: italic;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.remove-button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.remove-button:hover {
+  background-color: #cc4731;
+}
+
+/* Example fade-in animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.customer-card {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Example transition for queue display */
+.queue-display {
+  transition: all 0.3s ease-in-out;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Emphasize barber queue notice */
+.queue-notice {
+  color: #ccc;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Back to index button */
+.back-to-index {
+  background-color: #f5425d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-to-index:hover {
+  background-color: #e5354e;
+}
+
+/* Position the button */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin-right: auto;
+}
+
+.back-to-index {
+  margin-left: auto;
+}
+
+/* Style for WhatsApp link */
+a.whatsapp-link {
+  color: #25D366;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #EDEDED;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a.whatsapp-link:hover {
+  color: #fff;
+  background-color: #25D366;
+}
+
+/* Style for queue total count */
+.barber-queue p {
+  margin-top: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #2c3e50;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Icon style */
+.barber-queue p i {
+  margin-right: 5px;
+  color: #5e5e5e;
+}
+
