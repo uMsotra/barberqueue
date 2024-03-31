@@ -87,6 +87,25 @@ input[type="text"]:focus {
     outline: none;
 }
 
+/* Style for the email input field */
+input[type="email"] {
+    width: 80%;
+    padding: 12px;
+    border: 2px solid #43b94d75;
+    background-color: #333;
+    color: #eee;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto; /* Center the input field */
+    display: block; /* Ensure it stacks in a block */
+}
+
+input[type="email"]:focus {
+    outline: none;
+    border-color: #43b94d75;
+}
+
+
 /* Style the barber buttons */
 .barber-buttons {
     display: flex;
@@ -322,4 +341,62 @@ input[type="text"] {
     z-index: -1; /* Move the tiles to the back */
     pointer-events: none;
     background-attachment: fixed; /* Keeps the background fixed while scrolling */
+}
+
+/* Style the barber buttons */
+.barber-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.barber-button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #4444443b;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Style the barber dropdown */
+.barber-dropdown {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #43b94d75;
+    background-color: #333;
+    color: #eee;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    margin: 0 auto;
+    display: none; /* Hide by default */
+}
+/* Style the options inside the dropdown */
+.barber-dropdown option {
+    font-size: 1.2em; /* Increase font size for better readability */
+    text-align: center; /* Center-align text */
+    padding: 10px; /* Increase padding for better clickability */
+    background-color: #333;
+    color: #eee;
+    border: none; /* Remove option borders */
+    font-family: 'Roboto', sans-serif; /* Retro-futuristic font family */
+    font-weight: 500; /* Medium font weight */
+    letter-spacing: 1px; /* Add slight letter spacing */
+}
+
+/* Hover effect for dropdown options */
+.barber-dropdown option:hover {
+    background-color: #43b94d; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+/* Media Query for Mobile */
+@media screen and (max-width: 2000px) {
+    .barber-buttons {
+        display: none; /* Hide buttons on smaller screens */
+    }
+    
+    .barber-dropdown {
+        display: block; /* Show dropdown on smaller screens */
+    }
 }
