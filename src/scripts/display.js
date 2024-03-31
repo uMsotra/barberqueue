@@ -1,13 +1,13 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyATX1PtZS5e_1zxbYXNahop_YeYWEYcLPw",
-    authDomain: "matomesqueue.firebaseapp.com",
-    databaseURL: "https://matomesqueue-default-rtdb.firebaseio.com",
-    projectId: "matomesqueue",
-    storageBucket: "matomesqueue.appspot.com",
-    messagingSenderId: "223650040990",
-    appId: "1:223650040990:web:0b8bbb70704d2fc017ff8f",
-    measurementId: "G-QPX28V2J3P"
-  };
+  apiKey: "AIzaSyDSIsxreeatQd6dcuPg9RrWMvXTi1tx6ko",
+  authDomain: "maliqueue.firebaseapp.com",
+  databaseURL: "https://maliqueue-default-rtdb.firebaseio.com",
+  projectId: "maliqueue",
+  storageBucket: "maliqueue.appspot.com",
+  messagingSenderId: "583905268727",
+  appId: "1:583905268727:web:3a25e7f69bda40f0c354f2",
+  measurementId: "G-WJW4WV0RG4"
+};
   firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
   

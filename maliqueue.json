@@ -1,0 +1,17 @@
+{
+    "barbers": {
+      "Ndumiso": {
+        "available": true
+      },
+      "CeeJay": {
+        "available": true
+      },
+      "Goat Kay": {
+        "available": true
+      },
+      "Ta Mjakes": {
+        "available": true
+      }
+    }
+  }
+  
